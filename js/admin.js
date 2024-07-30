@@ -1,4 +1,11 @@
-const url = "https://668d7a4f099db4c579f3175c.mockapi.io/products";
+import {
+  getAllProducts,
+  getProductById,
+  deleteProduct,
+  addNewProduct,
+  updateProduct,
+} from "../api/products.js";
+import { mapProductToAdminTableRow } from "../utils/layout.js";
 
 // Load products in table at page loading
 const productsTableBody = document
@@ -7,41 +14,12 @@ const productsTableBody = document
 
 document.addEventListener("DOMContentLoaded", displayAllProducts);
 
-function getAllProducts() {
-  return fetch(url).then((response) => response.json());
-}
-function getProductById(id) {
-  return fetch(`${url}/${id}`).then((response) => response.json());
-}
+async function displayAllProducts() {
+  const products = await getAllProducts();
 
-function displayAllProducts() {
-  getAllProducts().then((products) => {
-    productsTableBody.innerHTML = products
-      .map(
-        (product) => `
-            <tr>
-               <td>${product.name}</td>
-               <td>${product.price}</td>
-               <td class="white">
-                  <img src="${product.imageUrl}" width="50px" />
-               </td>
-               <td>
-                  <button class="edit-${product.id}">
-                     <i class="fa-regular fa-pen-to-square">
-                     </i>
-                  </button>
-               </td>
-               <td>
-                  <button class="delete-${product.id}">
-                     <i class="fa-regular fa-trash-can"></i>
-                  </button>
-               </td>
-               
-            </tr>
-            `
-      )
-      .join("");
-  });
+  productsTableBody.innerHTML = products
+    .map(mapProductToAdminTableRow)
+    .join("");
 }
 
 // save new product
@@ -57,18 +35,9 @@ let editMode = false;
 let currentEditableProductId;
 
 saveProductButton.addEventListener("click", saveProduct);
-console.log(
-  nameInput,
-  priceInput,
-  imageUrlInput,
-  detailsInput,
-  categoryInput,
-  brandInput
-);
 
-function saveProduct(event) {
+async function saveProduct(event) {
   event.preventDefault();
-
   const product = {
     name: nameInput.value,
     price: Number(priceInput.value),
@@ -77,34 +46,41 @@ function saveProduct(event) {
     category: categoryInput.value,
     brand: brandInput.value,
   };
-
-  console.log(JSON.stringify(product), product);
-
-  fetch(editMode ? `${url}/${currentEditableProductId}` : url, {
-    method: editMode ? "PUT" : "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(product),
-  }).then(() => {
-    form.reset();
-    displayAllProducts();
-    editMode = false;
-  });
+  if (editMode) {
+    const editedProduct = await updateProduct(
+      product,
+      currentEditableProductId
+    );
+    if (editedProduct !== null) {
+      form.reset();
+      displayAllProducts();
+      editMode = false;
+    }
+  } else {
+    const newProduct = await addNewProduct(product);
+    if (newProduct !== null) {
+      form.reset();
+      displayAllProducts();
+    }
+  }
 }
+
+// edit product
 
 productsTableBody.addEventListener("click", handleActions);
 
-function handleActions(event) {
+async function handleActions(event) {
   const className = event.target.parentElement.className;
   if (className.includes("edit")) {
     const productId = className.split("-")[1];
     editProduct(productId);
   } else if (className.includes("delete")) {
     const productId = className.split("-")[1];
-    deleteProduct(productId);
+    await deleteProduct(productId);
+    await displayAllProducts();
   }
 }
+
 function editProduct(id) {
   getProductById(id).then((product) => {
     editMode = true;
@@ -116,13 +92,5 @@ function editProduct(id) {
     brandInput.value = product.brand;
 
     currentEditableProductId = product.id;
-  });
-}
-
-function deleteProduct(id) {
-  fetch(`${url}/${id}`, {
-    method: "DELETE",
-  }).then(() => {
-    displayAllProducts();
   });
 }
