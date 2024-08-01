@@ -36,10 +36,6 @@ form > button {
   color: white;
 }
 
-button {
-  cursor: pointer;
-}
-
 table {
   width: 100%;
   border-collapse: collapse;
@@ -76,8 +72,4 @@ textarea {
   border-radius: 10px;
   resize: none;
   padding: 5px;
-}
-.btn {
-  background-color: transparent;
-  border: none;
 }
