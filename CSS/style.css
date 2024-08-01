@@ -59,6 +59,9 @@ body {
 .p-5 {
   padding: 5px;
 }
+.w-200 {
+  width: 200px;
+}
 .white {
   background-color: #ffffff;
 }
