@@ -6,7 +6,7 @@ export function mapProductToCard(product) {
                   <img src=${product.imageUrl} width="150px"/>
                </a>
 					<p class="card-price">${product.price} lei</p>
-               <button class="btn add-to-cart" data-id=${product.id}>
+               <button class="btn add-to-cart" data-id=${product.id} data-name=${product.name} data-price =${product.price} data-image=${product.imageUrl}>
                <i class="fa-solid fa-cart-plus fa-lg"></i>
                </button>
 				</div>
