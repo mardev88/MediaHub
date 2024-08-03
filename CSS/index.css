@@ -14,4 +14,24 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
+  padding-bottom: 400px;
+}
+.filters {
+  margin-top: 50px;
+}
+.brand {
+  padding-left: 10px;
+}
+.badge {
+  border-radius: 20px;
+  width: 60px;
+  padding: 10px 5px;
+}
+input,
+label {
+  cursor: pointer;
+}
+span {
+  color: #4e4949;
+  font-size: 0.8em;
 }
