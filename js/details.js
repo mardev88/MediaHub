@@ -9,5 +9,7 @@ async function showProductDetails() {
   const response = await fetch(`${url}/${productId}`);
   const product = await response.json();
 
-  document.querySelector(".main").innerHTML = `<h2>${product.details}</h2>`;
+  document.querySelector(
+    ".main"
+  ).innerHTML = `<h2>${product.details}</h2> <img src="${product.imageUrl}"/>`;
 }

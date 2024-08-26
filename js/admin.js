@@ -30,6 +30,7 @@ const imageUrlInput = document.getElementById("image-url");
 const detailsInput = document.getElementById("details");
 const categoryInput = document.getElementById("category");
 const brandInput = document.getElementById("brand");
+const stockInput = document.getElementById("stock");
 const saveProductButton = document.getElementById("save-btn");
 let editMode = false;
 let currentEditableProductId;
@@ -45,6 +46,7 @@ async function saveProduct(event) {
     details: detailsInput.value,
     category: categoryInput.value,
     brand: brandInput.value,
+    stock: Number(stockInput.value),
   };
   if (editMode) {
     const editedProduct = await updateProduct(
@@ -90,6 +92,7 @@ function editProduct(id) {
     detailsInput.value = product.details;
     categoryInput.value = product.category;
     brandInput.value = product.brand;
+    stockInput.value = product.stock;
 
     currentEditableProductId = product.id;
   });

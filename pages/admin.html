@@ -24,9 +24,7 @@
       <div class="navbar flex justify-around items-center bg-dark p-5">
         <div class="logo">
           <h3 class="flex items-center gap-10">
-            <a href="../index.html"
-              ><i class="fa-brands fa-shopware fa-spin"></i
-            ></a>
+            <a href="../index.html"><i class="fa-brands fa-shopware"></i></a>
             <a href="../index.html">MediaHub</a>
           </h3>
         </div>
@@ -62,12 +60,17 @@
             <label for="brand">Brand</label>
             <input type="text" id="brand" />
           </div>
+          <div>
+            <label for="stock">Stock</label>
+            <input type="text" id="stock" />
+          </div>
           <button id="save-btn">Save product</button>
         </form>
         <table id="products-table">
           <thead>
             <tr>
               <th>Name</th>
+              <th>Stock</th>
               <th>Price</th>
               <th>Image</th>
               <th>Edit</th>

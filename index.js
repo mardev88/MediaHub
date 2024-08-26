@@ -17,6 +17,7 @@ async function displayAllProducts() {
       const price = button.getAttribute("data-price");
       const name = button.getAttribute("data-name");
       const imageUrl = button.getAttribute("data-image");
+      const stock = button.getAttribute("data-stock");
 
       let cart = JSON.parse(localStorage.getItem("cart")) || {};
       if (cart[productId]) {
@@ -27,6 +28,7 @@ async function displayAllProducts() {
           price: price,
           name: name,
           imageUrl: imageUrl,
+          stock: stock,
         };
       }
 

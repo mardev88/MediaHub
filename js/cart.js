@@ -11,6 +11,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     for (let id in cart) {
       const product = cart[id];
+      const { stock, quantity } = product;
 
       const productCard = document.createElement("div");
       productCard.className =
@@ -23,7 +24,9 @@ document.addEventListener("DOMContentLoaded", () => {
         <div>
           <button data-id=${id} ${disabled} class="decrease">-</button>
           <span>${product.quantity}</span>
-          <button data-id=${id} class="increase">+</button>
+          <button data-id=${id} ${
+        Number(stock) === quantity ? "disabled" : ""
+      } class="increase">+</button>
         </div>
       </div>  
       <span>${product.price * product.quantity} lei</span>
@@ -39,7 +42,10 @@ document.addEventListener("DOMContentLoaded", () => {
   cartItemsContainer.addEventListener("click", (e) => {
     if (e.target.classList.contains("increase")) {
       const id = e.target.getAttribute("data-id");
-      cart[id].quantity += 1;
+      const stock = Number(cart[id].stock);
+      if (stock > cart[id].quantity) {
+        cart[id].quantity += 1;
+      }
     } else if (e.target.classList.contains("decrease")) {
       const id = e.target.getAttribute("data-id");
       cart[id].quantity -= 1;
