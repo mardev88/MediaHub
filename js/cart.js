@@ -18,12 +18,12 @@ document.addEventListener("DOMContentLoaded", () => {
         "flex justify-between items-center w-300 border-bottom";
       const disabled = product.quantity === 1 ? "disabled" : "";
       productCard.innerHTML = `
-      <img width="20px" src=${product.imageUrl}/>
-      <div class="w-150 h-40 flex gap-20 justify-between items-center">
-        <span><a href="details.html?id=${id}">
+      <img width="150px" src=${product.imageUrl}/>
+      <div class="w-300 h-40 flex gap-25 justify-between items-center">
+        <span class="w-150"><a href="details.html?id=${id}">
         ${product.name}
                </a></span>
-        <div>
+        <div class="flex">
           <button data-id=${id} ${disabled} class="decrease">-</button>
           <span>${product.quantity}</span>
           <button data-id=${id} ${
@@ -31,14 +31,14 @@ document.addEventListener("DOMContentLoaded", () => {
       } class="increase">+</button>
         </div>
       </div>  
-      <span>${product.price * product.quantity} lei</span>
+      <span>${product.price * product.quantity}lei</span>
       <button data-id=${id} class="delete">Sterge</button>
       `;
       total = total + product.price * product.quantity;
       cartItemsContainer.appendChild(productCard);
     }
     cartTotalContainer.innerHTML =
-      total === 0 ? "Cosul de cumparaturi este gol" : `Total: ${total}`;
+      total === 0 ? "Cosul de cumparaturi este gol" : `Total: ${total} lei`;
   }
 
   cartItemsContainer.addEventListener("click", (e) => {
