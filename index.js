@@ -21,7 +21,9 @@ async function displayAllProducts() {
 
       let cart = JSON.parse(localStorage.getItem("cart")) || {};
       if (cart[productId]) {
-        cart[productId].quantity += 1;
+        if (Number(stock) > cart[productId].quantity) {
+          cart[productId].quantity += 1;
+        }
       } else {
         cart[productId] = {
           quantity: 1,
@@ -35,10 +37,9 @@ async function displayAllProducts() {
       localStorage.setItem("cart", JSON.stringify(cart));
     });
   });
-  // Calculate the quantity of products for each brand
-  const brandCounts = products.reduce((acc, product) => {
-    acc[product.brand] = (acc[product.brand] || 0) + 1;
-    return acc;
+  const brandCounts = products.reduce((count, product) => {
+    count[product.brand] = (count[product.brand] || 0) + 1;
+    return count;
   }, {});
 
   const uniqueBrands = Object.keys(brandCounts);
@@ -55,7 +56,6 @@ async function displayAllProducts() {
     )
     .join("");
 
-  // Ensure only one checkbox can be checked at a time
   brandFilterContainer.addEventListener("change", (e) => {
     if (e.target.name === "brand") {
       const checkboxes = document.querySelectorAll('input[name="brand"]');

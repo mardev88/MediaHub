@@ -20,7 +20,9 @@ document.addEventListener("DOMContentLoaded", () => {
       productCard.innerHTML = `
       <img width="20px" src=${product.imageUrl}/>
       <div class="w-150 h-40 flex gap-20 justify-between items-center">
-        <span>${product.name}</span>
+        <span><a href="details.html?id=${id}">
+        ${product.name}
+               </a></span>
         <div>
           <button data-id=${id} ${disabled} class="decrease">-</button>
           <span>${product.quantity}</span>
